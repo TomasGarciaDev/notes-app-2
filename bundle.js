@@ -33,8 +33,16 @@
         constructor(model2) {
           this.model = model2;
           this.mainContainerEl = document.querySelector("#main-container");
+          this.addButtonEl = document.querySelector("#input-note");
+          this.addButtonEl.addEventListener("click", () => {
+            const noteInput = document.querySelector("#note-input").value;
+            this.model.addNote(noteInput);
+            this.displayNotes();
+            document.querySelector("#note-input").value = "";
+          });
         }
         displayNotes() {
+          this.mainContainerEl.innerHTML = "";
           this.model.getNotes().forEach((note) => {
             const noteEl = document.createElement("div");
             noteEl.innerText = note;
@@ -51,7 +59,6 @@
   var NotesModel = require_notesModel();
   var NotesView = require_notesView();
   var model = new NotesModel();
-  model.addNote("This is an example note");
   var notesView = new NotesView(model);
   notesView.displayNotes();
 })();
